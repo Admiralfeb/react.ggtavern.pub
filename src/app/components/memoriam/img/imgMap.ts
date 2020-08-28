@@ -15,23 +15,27 @@ import gg13 from './gg13.jpg';
 import gg14 from './gg14.jpg';
 import gg19 from './gg19.jpg';
 import gg20 from './gg20.jpg';
+import ggconst1 from './ggconst1.jpg';
+import ggconst2 from './ggconst2.jpg';
 
 export const ImgMap = [
-    { index: 0, src: ggmask, alt: 'ict gg mask' },
-    { index: 1, src: gg1, alt: 'jack-in-the-box Thursday' },
-    { index: 2, src: gg2, alt: 'grumpy' },
-    { index: 3, src: gg3, alt: 'america\'s booze' },
-    { index: 4, src: gg4, alt: 'Garrrrr' },
-    { index: 5, src: gg5, alt: 'snap pop grin?' },
-    { index: 6, src: gg6, alt: 'Thanos Rising' },
-    { index: 7, src: gg7, alt: 'rubix consortium' },
-    { index: 8, src: gg8, alt: 'rich is crazy' },
-    { index: 9, src: gg9, alt: 'malort face' },
-    { index: 10, src: gg10, alt: 'whiskey tasting' },
-    { index: 11, src: gg11, alt: 'jen and a cider table' },
-    { index: 12, src: gg12, alt: 'cider tasting' },
-    { index: 13, src: gg13, alt: 'do you wanna build a snowman?' },
-    { index: 14, src: gg14, alt: 'sorceror' },
-    { index: 15, src: gg19, alt: 'for the horde.. in another life' },
-    { index: 16, src: gg20, alt: 'goodbye for now' },
+    { src: ggconst1, alt: 'baby tavern 1' },
+    { src: ggconst2, alt: 'baby tavern 2' },
+    { src: ggmask, alt: 'ict gg mask' },
+    { src: gg1, alt: 'jack-in-the-box Thursday' },
+    { src: gg2, alt: 'grumpy' },
+    { src: gg3, alt: 'america\'s booze' },
+    { src: gg4, alt: 'Garrrrr' },
+    { src: gg5, alt: 'snap pop grin?' },
+    { src: gg6, alt: 'Thanos Rising' },
+    { src: gg7, alt: 'rubix consortium' },
+    { src: gg8, alt: 'rich is crazy' },
+    { src: gg9, alt: 'malort face' },
+    { src: gg10, alt: 'whiskey tasting' },
+    { src: gg11, alt: 'jen and a cider table' },
+    { src: gg12, alt: 'cider tasting' },
+    { src: gg13, alt: 'do you wanna build a snowman?' },
+    { src: gg14, alt: 'sorceror' },
+    { src: gg19, alt: 'for the horde.. in another life' },
+    { src: gg20, alt: 'goodbye for now' },
 ]
