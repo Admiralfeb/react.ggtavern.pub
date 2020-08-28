@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import logo from 'assets/ggTavern.png';
 import { Button, IconButton } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
-import firebase from 'firebase';
+import * as firebase from 'firebase/app';
 
 import { useAuth } from 'app/hooks/useAuth.hook';
 
