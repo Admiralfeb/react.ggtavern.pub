@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "outDir": "./out-tsc/",
+
+    "target": "es6"
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["test.ts", "**/*.spec.ts"]
+}

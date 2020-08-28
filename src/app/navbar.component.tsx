@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import logo from 'assets/ggTavern.png';
 import { Button, IconButton } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
-import * as firebase from 'firebase/app';
+import { signOut } from 'app/services/auth';
 
 import { useAuth } from 'app/hooks/useAuth.hook';
 
@@ -51,8 +51,4 @@ export const NavbarComponent = () => {
       )}
     </nav>
   );
-};
-
-const signOut = () => {
-  firebase.auth().signOut();
 };

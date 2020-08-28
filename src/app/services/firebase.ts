@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import 'firebase/storage';
 import { ID } from 'app/models/id.model';
 
 const firebaseConfig = {
@@ -13,12 +14,18 @@ const firebaseConfig = {
     appId: '1:770177405846:web:e3b9b6dcc4b1808be3c3b7',
 };
 firebase.initializeApp(firebaseConfig);
+
 const db = firebase.firestore();
+const auth = firebase.auth();
+const storage = firebase.storage();
+
 
 export const loginAnon = async (): Promise<firebase.auth.UserCredential> => {
-    const value = await firebase.auth().signInAnonymously();
+    const value = await auth.signInAnonymously();
     return value;
 }
+
+export const signOutfromFirebase = async (): Promise<void> => auth.signOut();
 
 /**
  * Gets all documents' data on the path specified. Does not retrieve sub-collections.
@@ -59,4 +66,9 @@ export const getItemswithIDfromFirestore = async <T extends ID>(queryPath: strin
     } catch (err) {
         throw err;
     }
+}
+
+export const getLocationfromFireBaseStorage = async (path: string) => {
+    const ref = storage.refFromURL(path);
+    return ref.getDownloadURL();
 }
