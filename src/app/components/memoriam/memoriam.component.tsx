@@ -6,6 +6,7 @@ import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { getItems } from 'app/services/db';
 import { getFromStorage } from 'app/services/storage';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -80,6 +81,10 @@ const useStyles = makeStyles((theme) => ({
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
+  spinner: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
 }));
 
 export const Memoriam = () => {
@@ -113,10 +118,15 @@ export const Memoriam = () => {
             ? classes.boxMed
             : classes.boxSmall
         }>
-        {imgState &&
+        {imgState ? (
           imgState.map((img, index) => {
             return <MemoriamImage key={index} src={img.path} alt={img.alt} />;
-          })}
+          })
+        ) : (
+          <div className={classes.spinner}>
+            <CircularProgress />
+          </div>
+        )}
       </div>
       <Fab color='primary' className={classes.fab} onClick={scrollTop}>
         <KeyboardArrowUpIcon />
