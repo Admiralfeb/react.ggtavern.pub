@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 import { MemoriamImage } from './memoriam-image.component';
-import { ImgMap } from './img/imgMap';
 import { useTitle } from 'app/hooks/useTitle.hook';
 import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import { getItems } from 'app/services/db';
+import { getFromStorage } from 'app/services/storage';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -79,6 +81,10 @@ const useStyles = makeStyles((theme) => ({
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
+  spinner: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
 }));
 
 export const Memoriam = () => {
@@ -87,6 +93,14 @@ export const Memoriam = () => {
   const isMed = useMediaQuery(theme.breakpoints.up('md'));
   const isLarger = useMediaQuery(theme.breakpoints.up('lg'));
   useTitle('GGTavern - In Memoriam');
+  const [imgState, setImgState] = useState<IMapping[]>();
+
+  useEffect(() => {
+    const asyncCall = async () => {
+      setImgState(await getImgLocations());
+    };
+    asyncCall();
+  }, []);
 
   const scrollTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -104,13 +118,45 @@ export const Memoriam = () => {
             ? classes.boxMed
             : classes.boxSmall
         }>
-        {ImgMap.map((img, index) => {
-          return <MemoriamImage key={index} src={img.src} alt={img.alt} />;
-        })}
+        {imgState ? (
+          imgState.map((img, index) => {
+            return <MemoriamImage key={index} src={img.path} alt={img.alt} />;
+          })
+        ) : (
+          <div className={classes.spinner}>
+            <CircularProgress />
+          </div>
+        )}
       </div>
       <Fab color='primary' className={classes.fab} onClick={scrollTop}>
         <KeyboardArrowUpIcon />
       </Fab>
     </div>
   );
+};
+
+interface IMapping {
+  src: string;
+  alt: string;
+  path?: string;
+}
+interface IMap {
+  imgMap: IMapping[];
+}
+
+const getImgLocations = async (): Promise<IMapping[]> => {
+  let mapping = await getItems<IMap>('memoriam');
+  console.log(mapping[0]);
+  let singleMapping = mapping[0].imgMap;
+  const finalMapping = await Promise.all(
+    singleMapping.map(async (mappy) => {
+      const value = await getFromStorage(
+        `gs://gg-tavern.appspot.com/public/img/memoriam/${mappy.src}`
+      );
+      mappy.path = value as string;
+
+      return mappy;
+    })
+  );
+  return finalMapping;
 };
