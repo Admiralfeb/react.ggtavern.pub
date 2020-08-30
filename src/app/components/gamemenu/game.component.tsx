@@ -7,6 +7,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { useTitle } from 'app/hooks/useTitle.hook';
 import { GameSystem } from './game.model';
 import { getItems, sortItems } from 'app/services';
+import { getDatafromtheRealm } from 'app/services/realm';
 
 const useStyles = makeStyles({
   sysName: {
@@ -57,6 +58,8 @@ const getSystems = async (): Promise<GameSystem[]> => {
   const pathString = 'games';
   try {
     let systems: GameSystem[] = [];
+    const mongoItems = await getDatafromtheRealm<GameSystem>(pathString);
+    console.log(mongoItems);
     const itemData = await getItems<GameSystem>(pathString);
     systems = sortItems(itemData, 'system');
     systems = itemData.map((system) => {
