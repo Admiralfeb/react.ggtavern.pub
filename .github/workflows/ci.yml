@@ -16,14 +16,14 @@ jobs:
       - name: Install Project
         run: npm ci
       - name: Run Unit Tests
-        run: npm test -- --coverage
+        run: npm test
         env:
           CI: true
       - name: Upload CodeCoverage
         uses: codecov/codecov-action@master
         with:
           token: ${{secrets.CODECOV_TOKEN}}
-          file: coverage/*.json
+          file: client/coverage/*.json
           flags: unittests
 
   build:
