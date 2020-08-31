@@ -3,11 +3,6 @@ import { makeStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Link from '@material-ui/core/Link';
-import IconButton from '@material-ui/core/IconButton';
-import fbIcon from 'assets/facebook.png';
-import discordIcon from 'assets/discord.png';
-import youtubeIcon from 'assets/youtube.png';
-import instaIcon from 'assets/insta.png';
 import { useTitle } from 'app/hooks/useTitle.hook';
 
 const useStyles = makeStyles({
