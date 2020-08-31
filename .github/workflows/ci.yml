@@ -23,7 +23,7 @@ jobs:
         uses: codecov/codecov-action@master
         with:
           token: ${{secrets.CODECOV_TOKEN}}
-          file: coverage/*.json
+          file: client/coverage/*.json
           flags: unittests
 
   build:
