@@ -10,19 +10,16 @@ const client = new MongoClient(connectionString, { useNewUrlParser: true, useUni
 const router = express.Router();
 
 router.get('/mongo/games', (_, res) => {
-    console.log(connectionString);
     getFromMongo('games')
         .then(response => res.json(response))
         .catch(_ => res.status(500));
 });
 router.get('/mongo/menu', (_, res) => {
-    console.log(connectionString);
     getFromMongo('menu')
         .then(response => res.json(response))
         .catch(_ => res.status(500));
 });
 router.get('/mongo/memoriam', (_, res) => {
-    console.log(connectionString);
     getFromMongo('memoriam')
         .then(response => res.json(response))
         .catch(_ => res.status(500));
