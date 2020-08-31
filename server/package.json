@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc -p .",
     "start": "nodemon -r dotenv/config server.ts",
-    "start:prod": "node -r dotenv/config -r build/server.js"
+    "start:prod": "node -r dotenv/config build/server.js"
   },
   "keywords": [],
   "author": "",
