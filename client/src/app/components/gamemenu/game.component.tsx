@@ -6,8 +6,8 @@ import { Toolbar, IconButton, makeStyles } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useTitle } from 'app/hooks/useTitle.hook';
 import { GameSystem } from './game.model';
-import { getItems, sortItems } from 'app/services';
-import { getDatafromtheRealm } from 'app/services/realm';
+import { sortItems, fetchfromApi } from 'app/services';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles({
   sysName: {
@@ -21,14 +21,20 @@ export const Games = () => {
   const [systemList, setSystemList] = useState<GameSystem[]>();
   const [currentSystem, setcurrentSystem] = useState<GameSystem>();
   const classes = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     getSystems()
       .then((systems) => {
         setSystemList(systems);
       })
-      .catch((err) => console.error(err));
-  }, []);
+      .catch((err) => {
+        enqueueSnackbar('Error retrieving games from server', {
+          variant: 'error',
+        });
+        console.error(err);
+      });
+  }, [enqueueSnackbar]);
 
   return (
     <>
@@ -55,12 +61,9 @@ export const Games = () => {
 };
 
 const getSystems = async (): Promise<GameSystem[]> => {
-  const pathString = 'games';
   try {
     let systems: GameSystem[] = [];
-    const mongoItems = await getDatafromtheRealm<GameSystem>(pathString);
-    console.log(mongoItems);
-    const itemData = await getItems<GameSystem>(pathString);
+    const itemData = await fetchfromApi<GameSystem[]>('api/mongo/games');
     systems = sortItems(itemData, 'system');
     systems = itemData.map((system) => {
       let games = system.games;

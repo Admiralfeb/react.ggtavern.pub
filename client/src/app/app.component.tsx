@@ -2,6 +2,7 @@ import React from 'react';
 
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import { darkTheme } from './theme';
+import { SnackbarProvider } from 'notistack';
 import { createBrowserHistory } from 'history';
 
 import { Router } from 'react-router-dom';
@@ -13,11 +14,13 @@ export default function App() {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <Router history={history}>
-        <NavbarComponent />
-        <AppRoutes />
-      </Router>
+      <SnackbarProvider maxSnack={2}>
+        <CssBaseline />
+        <Router history={history}>
+          <NavbarComponent />
+          <AppRoutes />
+        </Router>
+      </SnackbarProvider>
     </ThemeProvider>
   );
 }

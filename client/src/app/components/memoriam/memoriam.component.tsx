@@ -4,9 +4,9 @@ import { MemoriamImage } from './memoriam-image.component';
 import { useTitle } from 'app/hooks/useTitle.hook';
 import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import { getItems } from 'app/services/db';
-import { getFromStorage } from 'app/services/storage';
+import { useSnackbar } from 'notistack';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { fetchfromApi, sortItems } from 'app/services';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -94,13 +94,20 @@ export const Memoriam = () => {
   const isLarger = useMediaQuery(theme.breakpoints.up('lg'));
   useTitle('GGTavern - In Memoriam');
   const [imgState, setImgState] = useState<IMapping[]>();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     const asyncCall = async () => {
-      setImgState(await getImgLocations());
+      try {
+        setImgState(await getImgLocations());
+      } catch (err) {
+        enqueueSnackbar('Error getting memorial images from server', {
+          variant: 'error',
+        });
+      }
     };
     asyncCall();
-  }, []);
+  }, [enqueueSnackbar]);
 
   const scrollTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -120,7 +127,13 @@ export const Memoriam = () => {
         }>
         {imgState ? (
           imgState.map((img, index) => {
-            return <MemoriamImage key={index} src={img.path} alt={img.alt} />;
+            return (
+              <MemoriamImage
+                key={index}
+                src={'data:image/jpg;base64,' + img.encoded}
+                alt={img.description}
+              />
+            );
           })
         ) : (
           <div className={classes.spinner}>
@@ -136,27 +149,14 @@ export const Memoriam = () => {
 };
 
 interface IMapping {
-  src: string;
-  alt: string;
-  path?: string;
-}
-interface IMap {
-  imgMap: IMapping[];
+  index: number;
+  name: string;
+  description: string;
+  encoded: string;
 }
 
 const getImgLocations = async (): Promise<IMapping[]> => {
-  let mapping = await getItems<IMap>('memoriam');
-  console.log(mapping[0]);
-  let singleMapping = mapping[0].imgMap;
-  const finalMapping = await Promise.all(
-    singleMapping.map(async (mappy) => {
-      const value = await getFromStorage(
-        `gs://gg-tavern.appspot.com/public/img/memoriam/${mappy.src}`
-      );
-      mappy.path = value as string;
-
-      return mappy;
-    })
-  );
+  const mapping = await fetchfromApi<IMapping[]>('api/mongo/memoriam');
+  const finalMapping = sortItems(mapping, 'index');
   return finalMapping;
 };

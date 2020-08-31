@@ -6,7 +6,8 @@ import { Toolbar, IconButton, makeStyles } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useTitle } from 'app/hooks/useTitle.hook';
 import { MenuSection, MenuItem } from './models';
-import { getItems, sortItems } from 'app/services';
+import { sortItems, fetchfromApi } from 'app/services';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles({
   sysName: {
@@ -20,14 +21,20 @@ export const Foods = () => {
   const [sectionList, setSectionList] = useState<MenuSection[]>();
   const [currentSection, setcurrentSection] = useState<MenuSection>();
   const classes = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     getSections()
       .then((sections) => {
         setSectionList(sections);
       })
-      .catch((err) => console.error(err));
-  }, []);
+      .catch((err) => {
+        enqueueSnackbar('Error retrieving menu from server', {
+          variant: 'error',
+        });
+        console.error(err);
+      });
+  }, [enqueueSnackbar]);
 
   return (
     <>
@@ -54,10 +61,9 @@ export const Foods = () => {
 };
 
 const getSections = async (): Promise<MenuSection[]> => {
-  const pathString = 'menu';
   try {
     let sections: MenuSection[] = [];
-    const itemData = await getItems<MenuSection>(pathString);
+    const itemData = await fetchfromApi<MenuSection[]>('api/mongo/menu');
     sections = sortItems(itemData, 'name');
     sections = itemData.map((section) => {
       let items = section.items;

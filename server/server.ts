@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import { mongoApi } from './api/db';
 
 const app = express();
 
@@ -8,8 +9,10 @@ app.use(express.urlencoded({ extended: false }));
 
 const router = express.Router();
 
-const staticFiles = express.static(path.join(__dirname, "../../client/build"))
+const staticFiles = express.static(path.join(__dirname, "../client/build"))
 app.use(staticFiles);
+
+router.use('/api', mongoApi);
 
 router.get('/games', (req, res) => {
     const response = [
