@@ -27,7 +27,7 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "realm": "^10.0.0-beta.6",
+    "realm": "^10.0.0-beta.11",
     "realm-web": "^0.8.1",
     "require_optional": "^1.0.1",
     "typescript": "^4.0.2"
