@@ -8,6 +8,7 @@ import {
   Games,
   Foods,
   NotFoundComponent,
+  AboutAuthor,
 } from 'app/components';
 
 export const AppRoutes = () => {
@@ -24,6 +25,12 @@ export const AppRoutes = () => {
       </Route>
       <Route path='/games'>
         <Games />
+      </Route>
+      <Route path='/author'>
+        <AboutAuthor />
+      </Route>
+      <Route path='/dev'>
+        <AboutAuthor />
       </Route>
       <Route path='/' exact>
         <Love />
