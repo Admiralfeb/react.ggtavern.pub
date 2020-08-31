@@ -14,7 +14,7 @@ app.use(staticFiles);
 
 router.use('/api', mongoApi);
 
-router.get('/games', (req, res) => {
+router.get('/testgames', (req, res) => {
     const response = [
         { id: 1, name: 'Command and Conquer' },
         { id: 2, name: 'Star Trek Armada 2' },
