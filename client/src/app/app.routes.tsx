@@ -9,6 +9,7 @@ import {
   Foods,
   NotFoundComponent,
   AboutAuthor,
+  ComicList,
 } from 'app/components';
 
 export const AppRoutes = () => {
@@ -25,6 +26,9 @@ export const AppRoutes = () => {
       </Route>
       <Route path='/games'>
         <Games />
+      </Route>
+      <Route path='/comics'>
+        <ComicList />
       </Route>
       <Route path='/author'>
         <AboutAuthor />

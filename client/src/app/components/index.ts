@@ -1,5 +1,6 @@
-export * from './gamemenu/game.component';
+export * from './comics/comicList.component';
 export * from './foodmenu/food.component';
+export * from './gamemenu/game.component';
 export * from './memoriam/memoriam.component';
 export * from './about-author.component';
 export * from './contact.component';
