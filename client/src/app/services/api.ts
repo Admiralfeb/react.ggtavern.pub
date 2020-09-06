@@ -1,6 +1,11 @@
-export const fetchfromApi = async <T,>(uri: string): Promise<T> => {
+export const fetchfromApi = async <T,>(uri: string, query?: any): Promise<T> => {
     try {
-        const response = await fetch(uri);
+        let queryString = '';
+        if (query) {
+            queryString = new URLSearchParams(query).toString();
+        }
+        let fulluri = uri + (queryString ? `?${queryString}` : '');
+        const response = await fetch(fulluri);
         if (response.ok) {
             const itemData: T = await response.json();
             return itemData;

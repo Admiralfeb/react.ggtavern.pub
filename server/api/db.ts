@@ -24,17 +24,24 @@ router.get('/mongo/memoriam', (_, res) => {
         .then(response => res.json(response))
         .catch(_ => res.status(500));
 });
+router.get('/mongo/comics', (req, res) => {
+    getFromMongo('comics', req.query)
+        .then(response => res.json(response))
+        .catch(_ => res.status(500));
+});
 
-const getFromMongo = async (collectionName: string) => {
+const getFromMongo = async (collectionName: string, query?: any) => {
     try {
         await client.connect();
 
         const database = client.db('ggtavern');
         const collection = database.collection(collectionName);
 
-        const cursor = collection.find();
+        if (query && Object.keys(query).includes('index')) {
+            query.index = parseInt(query.index);
+        }
+        const cursor = collection.find(query);
         const response = await cursor.toArray();
-
         return response;
     } catch (err) {
         console.error(err);

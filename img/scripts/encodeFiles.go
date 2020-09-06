@@ -11,10 +11,11 @@ import (
 )
 
 type imgData struct {
-	Index       int32  `json:"index"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Encoded     string `json:"encoded"`
+	Index         int    `json:"index"`
+	Name          string `json:"name"`
+	ComicGrouping string `json:"comicGrouping"`
+	Description   string `json:"description"`
+	Encoded       string `json:"encoded"`
 }
 
 func main() {
@@ -61,14 +62,14 @@ func main() {
 		encoded := base64.StdEncoding.EncodeToString(content)
 
 		fmt.Println(f + " encoded")
-		data := imgData{0, f, "", encoded}
+		data := imgData{0, f, "", "", encoded}
 		encodedList = append(encodedList, data)
 		openFile.Close()
 	}
 
-	j, e := json.Marshal(encodedList)
-	if e != nil {
-		panic(e)
+	j, err := json.Marshal(encodedList)
+	if err != nil {
+		panic(err)
 	}
 
 	byteData := []byte(j)
