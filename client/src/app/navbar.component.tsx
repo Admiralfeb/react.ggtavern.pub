@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from 'assets/ggTavern.png';
-import { Button, IconButton } from '@material-ui/core';
-import HomeIcon from '@material-ui/icons/Home';
+import { Button } from '@material-ui/core';
 import useStyles from './navbar.styles';
 
 export const NavbarComponent = () => {
@@ -17,20 +16,19 @@ export const NavbarComponent = () => {
           alt='ggtavern-logo'
           className={classes.img}></img>
       </Link>
-      <IconButton
-        exact
-        to='/'
-        className={classes.navLink}
-        activeClassName={classes.active}
-        component={NavLink}>
-        <HomeIcon />
-      </IconButton>
       <Button
         to='/contact'
         className={classes.navLink}
         activeClassName={classes.active}
         component={NavLink}>
         Contact Us
+      </Button>
+      <Button
+        to='/comics'
+        className={classes.navLink}
+        activeClassName={classes.active}
+        component={NavLink}>
+        Comics
       </Button>
       <Button
         to='/memoriam'

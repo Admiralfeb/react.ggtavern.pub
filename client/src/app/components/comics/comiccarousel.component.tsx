@@ -44,6 +44,7 @@ export const ComicCarousel = (props: { comic: string | undefined }) => {
           <img
             className={classes.img}
             src={'data:image/jpg;base64,' + comic.encoded}
+            alt=''
           />
         ))}
       </Carousel>
@@ -57,5 +58,5 @@ const getComicStrip = async (grouping: string): Promise<IComic[]> => {
     comicGrouping: grouping,
   });
   const sortedStrip = sortItems(comicStrip, 'index');
-  return comicStrip;
+  return sortedStrip;
 };

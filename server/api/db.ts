@@ -37,12 +37,11 @@ const getFromMongo = async (collectionName: string, query?: any) => {
         const database = client.db('ggtavern');
         const collection = database.collection(collectionName);
 
-        if (Object.keys(query).includes('index')) {
+        if (query && Object.keys(query).includes('index')) {
             query.index = parseInt(query.index);
         }
         const cursor = collection.find(query);
         const response = await cursor.toArray();
-
         return response;
     } catch (err) {
         console.error(err);
