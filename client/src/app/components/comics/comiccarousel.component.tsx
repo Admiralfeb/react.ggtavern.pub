@@ -3,7 +3,7 @@ import '@brainhubeu/react-carousel/lib/style.css';
 import React, { useState, useEffect } from 'react';
 import { IComic } from './comicImg.model';
 import { fetchfromApi, sortItems } from 'app/services';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, useTheme, useMediaQuery } from '@material-ui/core';
 
 const useStyles = makeStyles({
   hidden: {
@@ -16,8 +16,11 @@ const useStyles = makeStyles({
     opacity: 1,
     height: 'auto',
   },
-  img: {
+  imgSmall: {
     width: 400,
+  },
+  imgLarge: {
+    width: 600,
   },
 });
 
@@ -25,6 +28,8 @@ export const ComicCarousel = (props: { comic: string | undefined }) => {
   const [value, setValue] = useState(0);
   const [comicStrip, setComicStrip] = useState<IComic[]>();
   const classes = useStyles();
+  const theme = useTheme();
+  const isLarger = useMediaQuery(theme.breakpoints.up('lg'));
 
   useEffect(() => {
     if (props.comic) {
@@ -42,7 +47,7 @@ export const ComicCarousel = (props: { comic: string | undefined }) => {
       <Carousel value={value} onChange={onChange} dots>
         {comicStrip?.map((comic) => (
           <img
-            className={classes.img}
+            className={isLarger ? classes.imgLarge : classes.imgSmall}
             src={'data:image/jpg;base64,' + comic.encoded}
             alt=''
           />
